@@ -109,13 +109,13 @@
 }
 
 
-- (id)initWithFile:(NSString *)file;
+- (id)initWithData:(NSData *)data
 {
     self = [super init];
     if (self) {
-        _scanner = [[NSScanner  alloc] initWithString:[NSString stringWithContentsOfFile:file
-                                                                                encoding:NSUTF8StringEncoding
-                                                                                   error:NULL]];
+        NSString* string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+        _scanner = [[NSScanner  alloc] initWithString:string];
         [_scanner setCharactersToBeSkipped:nil];
     }
     return self;
@@ -123,7 +123,12 @@
 
 + (NSDictionary *)dictionaryWithINIFile:(NSString *)path;
 {
-    PEWINIParser *parser = [[self alloc] initWithFile:path];
+    return [self dictionaryWithData:[NSData dataWithContentsOfFile:path options:0 error:NULL]];
+}
+
++ (NSDictionary *)dictionaryWithData:(NSData *)data
+{
+    PEWINIParser *parser = [[self alloc] initWithData:data];
     return [parser parseINIFile];
 }
 

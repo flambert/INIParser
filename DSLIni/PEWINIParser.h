@@ -11,5 +11,6 @@
 @interface PEWINIParser : NSObject
 
 + (NSDictionary *)dictionaryWithINIFile:(NSString *)path;
++ (NSDictionary *)dictionaryWithData:(NSData *)data;
 
 @end
